@@ -7,9 +7,7 @@ import numpy as np
 
 plotly.offline.init_notebook_mode()
 
-pm_data = pd.read_csv('pm_changelog.csv', names=['remove', 'pm_key', 'pm_id', 
-                                                'related_key', 'related_id', 'related_type', 
-                                                'updated', 'status'])
+pm_data = pd.read_csv('pm_changelog_clean.csv')
 
 pm_data['updated'] = pd.to_datetime(pm_data['updated'], utc=True).dt.tz_convert('utc')#.dt.date
 pm_data = pm_data.set_index(pd.DatetimeIndex(pm_data['updated'])).sort_index()
@@ -95,9 +93,97 @@ def time():
     #return pm_data
         
 def distribution():
-    return pm_data
+    pm_data_tp = pm_data
+    pm_data_tp.index = pm_data_tp.index.month #_name()
+    closed = pm_data_tp.loc[pm_data['status'] == 'Closed']
+    closed_type_count = closed.groupby(closed.index)['related_type'].value_counts().to_frame().unstack(level=-1)
+    idx_int = [1,2,3,4,5,6,7,8,9]
+    idx_month = ['Jan', 'Feb', 'March', 'April', 'May', 'June', 'July', 'Aug', 'Sept']
+    closed_type_count = closed_type_count.rename(index=dict(zip(idx_int,idx_month)))
+    # Bug	Epic	Feature	// New Feature	// Spike	Story	Technical Story
+    trace = [
+        go.Bar(
+            name="Bug",
+            x=closed_type_count.index, 
+            y=closed_type_count['related_type']['Bug'],
+            marker=go.bar.Marker(
+                color='#003f5c',
+            )
+        ),
+        go.Bar(
+            name="Epic",
+            x=closed_type_count.index, 
+            y=closed_type_count['related_type']['Epic'],
+            marker=go.bar.Marker(
+                color='#374c80',
+            )
+        ),
+        go.Bar(
+            name="Feature",
+            x=closed_type_count.index, 
+            y=closed_type_count['related_type']['Feature'],
+            marker=go.bar.Marker(
+                color='#7a5195',
+            )
+        ),
+        go.Bar(
+            name="New Feature",
+            x=closed_type_count.index, 
+            y=closed_type_count['related_type']['New Feature'],
+            marker=go.bar.Marker(
+                color='#bc5090',
+            )
+        ),
+        go.Bar(
+            name="Spike",
+            x=closed_type_count.index, 
+            y=closed_type_count['related_type']['Spike'],
+            marker=go.bar.Marker(
+                color='#ef5675',
+            )
+        ),
+        go.Bar(
+            name="Story",
+            x=closed_type_count.index, 
+            y=closed_type_count['related_type']['Story'],
+            marker=go.bar.Marker(
+                color='#ff764a',
+            )
+        ),
+        go.Bar(
+            name="Technical Story",
+            x=closed_type_count.index, 
+            y=closed_type_count['related_type']['Technical Story'],
+            marker=go.bar.Marker(
+                color='#ffa600',
+            )
+        ),
+    ]
+    layout = go.Layout(
+        title='Distribution of Closed Issues by Month',
+        barmode='stack',
+        width=1280,
+        height=720,
+        xaxis=dict(
+            title='Month',
+            tickmode='linear',
+            #tickvals=['Jan', 'Feb', 'March', 'April', 'May', 'June', 'July', 'Aug', 'Sept'],
+            titlefont=dict(
+                size=12,
+            )
+        ),
+        yaxis=dict(
+            title='# of Issues',
+            titlefont=dict(
+                size=12,
+            )
+        )
+    )
+    fig = go.Figure(data=trace, layout=layout)
+    plotly.offline.iplot(fig, filename='flow-distribution')
+
 
 def load():
-    return 'lorem'
+    return pm_data
 
 # pm_doing_closed = pm_data.loc[pm_data['status'] == 'Doing'].append(pm_data.loc[pm_data['status'] == 'Closed'])I'm

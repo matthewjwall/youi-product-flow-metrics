@@ -4,14 +4,16 @@ from datetime import datetime
 
 #---------- UTILITY FUNCTIONS ----------#
 
-def get_single_changelog(pm_key, pm_id, single_issue):
+def get_single_changelog(pm_key, pm_id, single_issue, pm_labels):
+    print('GSC, Labels: ' + str(pm_labels))
     cl_data = []
     issue = jira_auth().issue(single_issue[0], expand='changelog')
+    print(issue)
     changelog = issue.changelog
     for history in changelog.histories:
         for item in history.items:
             if item.field == 'status':
-                cl_item = [pm_key, pm_id, issue.key, issue.id, issue.raw['fields']['issuetype']['name'], history.created, item.toString]
+                cl_item = [pm_key, pm_id, issue.key, issue.id, issue.raw['fields']['issuetype']['name'], history.created, item.toString, pm_labels]
                 cl_item_df = pd.DataFrame([cl_item])
                 print(cl_item)
                 cl_item_df.to_csv('pm_changelog.csv', mode='a', header=False)
