@@ -23,6 +23,24 @@ def get_single_changelog(pm_key, pm_id, single_issue, pm_labels):
     #cl.to_csv(cl_name, encoding='utf-8', index=False)
     print('done')
 
+def generic_changelog(single_issue, labels):
+    cl_data = []
+    issue = jira_auth().issue(single_issue, expand='changelog')
+    print(issue)
+    changelog = issue.changelog
+    for history in changelog.histories:
+        for item in history.items:
+            if item.field == 'status':
+                cl_item = [issue.key, issue.id, issue.raw['fields']['issuetype']['name'], history.created, item.toString, labels]
+                cl_item_df = pd.DataFrame([cl_item])
+                print(cl_item)
+                cl_item_df.to_csv('eng_changelog.csv', mode='a', header=False)
+                #cl_data.append(cl_item)
+    #cl = pd.DataFrame(cl_data, columns=['issue', 'date_changed', 'changed_to'])
+    #cl_name = 'product_jira_changelog_' + datetime.now().strftime('%Y-%m-%d') + '.csv'
+    #cl.to_csv(cl_name, encoding='utf-8', index=False)
+    print('done')
+
 def flatten_dict(d):
     def items():
         for key, value in d.items():
@@ -66,9 +84,3 @@ def jira_search(query):
     search = pd.DataFrame.from_records(search_list)
     #search_final = search[jira_fields].copy()
     return search
-
-def get_pm_issues():
-    results = jira_search('project in (PM)')
-    file_name = 'pm_jira_' + datetime.now().strftime('%Y-%m-%d') + '.csv'
-    results.to_csv(file_name, encoding='utf-8', index=False)
-    return file_name

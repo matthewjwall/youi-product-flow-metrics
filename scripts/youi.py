@@ -22,6 +22,12 @@ def get_pm_issues():
     results.to_csv(file_name, encoding='utf-8', index=False)
     return file_name
 
+def get_eng_issues():
+    results = youi_utils.jira_search('project in (US, BS, CS, RN, PT, PA)')
+    file_name = 'eng_jira_' + datetime.now().strftime('%Y-%m-%d') + '.csv'
+    results.to_csv(file_name, encoding='utf-8', index=False)
+    return file_name
+
 def pm_children_changelog(pm_csv):
     importlib.reload(youi_utils)
     pm_jira = pd.read_csv(pm_csv)
@@ -50,6 +56,14 @@ def pm_children_changelog(pm_csv):
     for index, row in pm_all_related.iterrows():
         for rel in row['pm_related']:
             youi_utils.get_single_changelog(row['pm_key'], row['pm_id'], rel, row['pm_labels'])
-    pm_changelog = pd.read_csv('pm_changelog.csv', names= ['remove', 'pm_key', 'pm_id', 'related_key', 'related_id', 'related_type', 'updated', 'status', 'pm_labels'])
+    pm_changelog = pd.read_csv('pm_changelog.csv', names= ['remove', 'pm_key', 'pm_id', 'related_key', 'related_id', 'related_type', 'updated', 'fromStatus', 'toStatus', 'pm_labels'])
     return pm_changelog
 
+def eng_children_changelog(pm_csv):
+    importlib.reload(youi_utils)
+    pm_jira = pd.read_csv(pm_csv)
+    pm_id_key = pd.DataFrame({'eng_id': pm_jira['id'], 'eng_key': pm_jira['key']})
+    for index, row in pm_id_key.iterrows():
+        label_list = youi_utils.jira_auth().issue(row['eng_id'], expand='changelog').raw['fields']['labels']
+        print(label_list)
+        youi_utils.generic_changelog(row['eng_id'], label_list)
