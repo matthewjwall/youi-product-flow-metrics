@@ -8,7 +8,7 @@ import importlib
 #---------- FLOW METRICS ----------#
 
 def clean_labels():
-    pm_cl_raw = pd.read_csv('pm_changelog.csv', names= ['remove', 'pm_key', 'pm_id', 'related_key', 'related_id', 'related_type', 'updated', 'status', 'labels'])
+    pm_cl_raw = pd.read_csv('pm_changelog.csv', names= ['remove', 'pm_key', 'pm_id', 'related_key', 'related_id', 'related_type', 'updated_time', 'updated_status', 'fix_version', 'labels'])
     pm_cl_raw.labels = pm_cl_raw.labels.apply(lambda s: list(ast.literal_eval(s))[0])
     pm_onehot = pd.get_dummies(pm_cl_raw.labels.apply(pd.Series).stack()).sum(level=0)
     pm_clean = pd.concat([pm_cl_raw, pm_onehot], axis=1)
@@ -23,7 +23,7 @@ def get_pm_issues():
     return file_name
 
 def get_eng_issues():
-    results = youi_utils.jira_search('project in (US, BS, CS, RN, PT, PA)')
+    results = youi_utils.jira_search('project in (US, BS, CS, RN, PT, PA) and updatedDate >= "-90d"')
     file_name = 'eng_jira_' + datetime.now().strftime('%Y-%m-%d') + '.csv'
     results.to_csv(file_name, encoding='utf-8', index=False)
     return file_name
@@ -56,7 +56,7 @@ def pm_children_changelog(pm_csv):
     for index, row in pm_all_related.iterrows():
         for rel in row['pm_related']:
             youi_utils.get_single_changelog(row['pm_key'], row['pm_id'], rel, row['pm_labels'])
-    pm_changelog = pd.read_csv('pm_changelog.csv', names= ['remove', 'pm_key', 'pm_id', 'related_key', 'related_id', 'related_type', 'updated', 'fromStatus', 'toStatus', 'pm_labels'])
+    pm_changelog = pd.read_csv('pm_changelog.csv')
     return pm_changelog
 
 def eng_children_changelog(pm_csv):

@@ -13,14 +13,10 @@ def get_single_changelog(pm_key, pm_id, single_issue, pm_labels):
     for history in changelog.histories:
         for item in history.items:
             if item.field == 'status':
-                cl_item = [pm_key, pm_id, issue.key, issue.id, issue.raw['fields']['issuetype']['name'], history.created, item.toString, pm_labels]
+                cl_item = [pm_key, pm_id, issue.key, issue.id, issue.raw['fields']['issuetype']['name'], history.created, item.toString, issue.raw['fields']['fixVersions'], pm_labels]
                 cl_item_df = pd.DataFrame([cl_item])
                 print(cl_item)
                 cl_item_df.to_csv('pm_changelog.csv', mode='a', header=False)
-                #cl_data.append(cl_item)
-    #cl = pd.DataFrame(cl_data, columns=['issue', 'date_changed', 'changed_to'])
-    #cl_name = 'product_jira_changelog_' + datetime.now().strftime('%Y-%m-%d') + '.csv'
-    #cl.to_csv(cl_name, encoding='utf-8', index=False)
     print('done')
 
 def generic_changelog(single_issue, labels):
@@ -31,14 +27,10 @@ def generic_changelog(single_issue, labels):
     for history in changelog.histories:
         for item in history.items:
             if item.field == 'status':
-                cl_item = [issue.key, issue.id, issue.raw['fields']['issuetype']['name'], history.created, item.toString, labels]
+                cl_item = [issue.key, issue.id, issue.raw['fields']['issuetype']['name'], history.created, item.toString, issue.raw['fields']['fixVersions'], labels]
                 cl_item_df = pd.DataFrame([cl_item])
                 print(cl_item)
                 cl_item_df.to_csv('eng_changelog.csv', mode='a', header=False)
-                #cl_data.append(cl_item)
-    #cl = pd.DataFrame(cl_data, columns=['issue', 'date_changed', 'changed_to'])
-    #cl_name = 'product_jira_changelog_' + datetime.now().strftime('%Y-%m-%d') + '.csv'
-    #cl.to_csv(cl_name, encoding='utf-8', index=False)
     print('done')
 
 def flatten_dict(d):
