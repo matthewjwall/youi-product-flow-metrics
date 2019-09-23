@@ -9,20 +9,68 @@ from ast import literal_eval
 pd.set_option('display.max_columns', 999)
 plotly.offline.init_notebook_mode()
 
-data = pd.read_csv('pm_changelog_clean.csv').drop(['Unnamed: 0', 'remove'], axis=1)
-eng_data = pd.read_csv('eng_changelog_clean.csv').drop(['Unnamed: 0'], axis=1)
+def product_closed_time(version):
+    eng_data = pd.read_csv('eng_changelog_clean.csv', encoding='utf_8').drop(['Unnamed: 0'], axis=1)
+    data = pd.read_csv('pm_changelog_clean.csv', encoding='utf_8').drop(['Unnamed: 0', 'remove'], axis=1)
+    for index, row in data.iterrows():
+        fix = row["fix_version"]
+        try:
+            fix = literal_eval(fix)[0]['name']
+            data.at[index, "fix_version"] = fix
+        except:
+            data.at[index, "fix_version"] = "None"
+    eng_data['updated_time'] = pd.to_datetime(eng_data['updated_time'], utc=True).dt.tz_convert('utc')
+    eng_data = eng_data.set_index(pd.DatetimeIndex(eng_data['updated_time'])).sort_index()
+    eng_data.index.names = ['index']
+    eng_time_delta = []
+    for key in eng_data['eng_key'].unique():
+        if key.startswith('PM') == False: 
+            issue = eng_data.loc[eng_data['eng_key'] == key]
+            issue_diff = issue['updated_time'].diff()
+            issue['time_diff'] = issue_diff
+            issue['time_sum'] = issue['time_diff'].sum()
+            eng_time_delta.append(issue)
+    
+    eng_time = pd.concat(eng_time_delta)
+    eng_time = eng_time.loc[eng_time['fix_version'] == version]
+    eng_time = eng_time.loc[(eng_time["updated_status"] == "Closed") | (eng_time["updated_status"] == "Done")]
+
+    ddb = eng_time.loc[eng_time['DDB'] == 1]
+    #eng_count = eng_time.loc[eng_time['DDB'] == 1]['eng_key'].unique()
+    #crt = eng_time.loc[(eng_time['Customer_Priority'] == 1) | (eng_time['Services_Priority'] == 1)]['time_diff'].sum()
+    #qual = eng_time.loc[eng_time['issue_type'] == 'Bug']['time_diff'].sum()
+
+    return ddb
+    #eng_count = eng_time.loc[eng_time['fix_version'] == version].loc[eng_time['DDB'] == 1]["eng_key"].unique().size
+    #eng_time = eng_data.loc[eng_data['fix_version'] == version].loc[eng_data['updated_status'] == ""]
+    #return eng_count
 
 def milestone_investment(version):
-    eng_57 = eng_data.loc[eng_data['fix_version'] == version].loc[(eng_data["updated_status"] == "Closed") | (eng_data["updated_status"] == "Done")]
-    ddb_57 = eng_57.loc[eng_57['DDB'] == 1]["eng_key"].unique().size
-    crt_57 = eng_57.loc[(eng_57['Customer_Priority'] == 1) | (eng_57['Services_Priority'] == 1)]["eng_key"].unique().size
-    qual_57 = eng_57.loc[eng_57['issue_type'] == 'Bug']["eng_key"].unique().size
+    eng_data = pd.read_csv('eng_changelog_clean.csv', encoding='utf_8').drop(['Unnamed: 0'], axis=1)
+    data = pd.read_csv('pm_changelog_clean.csv', encoding='utf_8').drop(['Unnamed: 0', 'remove'], axis=1)
+    for index, row in data.iterrows():
+        fix = row["fix_version"]
+        try:
+            fix = literal_eval(fix)[0]['name']
+            data.at[index, "fix_version"] = fix
+        except:
+            data.at[index, "fix_version"] = "None"
+
+    eng = eng_data.loc[eng_data['fix_version'] == version]
+    eng = eng.loc[(eng["updated_status"] == "Closed") | (eng["updated_status"] == "Done")]
+    ddb = eng.loc[eng['DDB'] == 1]["eng_key"].unique().size
+    crt = eng.loc[(eng['Customer_Priority'] == 1) | (eng['Services_Priority'] == 1)]["eng_key"].unique().size
+    qual = eng.loc[eng['issue_type'] == 'Bug']["eng_key"].unique().size
+    
+    pm = data.loc[data["fix_version"] == version].loc[(data["updated_status"] == "Closed") | (data["updated_status"] == "Done")]['related_key'].unique().size
 
     inv_list = [
-        [version, 'CRT', crt_57],
-        [version, 'Quality', qual_57],
-        [version, 'Engineering', ddb_57],
+        [version, 'CRT', crt],
+        [version, 'Quality', qual],
+        [version, 'Engineering', ddb],
+        [version, 'Product Backlog', pm]
     ]
+    
     inv_df = pd.DataFrame(inv_list, columns=['release', 'category', 'closed'])
     trace = [
         go.Bar(
@@ -54,10 +102,10 @@ def milestone_investment(version):
     )
     fig = go.Figure(data=trace, layout=layout)
     plotly.offline.iplot(fig, filename='eng_' + version)
-    return inv_df
+    return pm
 
 def pm_okrs():
-    okrs_list = ["Cloud_JSX", "Enablement", "JSX", "Performance", "Platform", "RNCloud", "RN_Upgrade"]
+    okrs_list = ["Cloud_JSX", "Enablement", "JSX", "Product_Performance", "Platform", "RN_Upgrade"]
     milestones = ["Milestone1", "Milestone2"]
     okrs = []
     for milestone in milestones:
@@ -153,21 +201,3 @@ def get_closed(df, label):
 def get_total(df, label):
     return df.loc[data[label] == 1]["related_key"].unique().size
 
-
-
-#eng_data = pd.read_csv('eng_changelog.csv', names=['eng_key', 'eng_id', 'issue_type', 'updated_time', 'updated_status', 'fix_version', 'labels']).reset_index().drop(['index'], axis=1)
-
-#for index, row in eng_data.iterrows():
-#    fix = row["fix_version"]
-#    fix_literal = literal_eval(fix)
-#    try:
-#        fix_name = fix_literal[0]['name']
-#        eng_data.set_value(index, "fix_version", fix_name)
-#    except:
-#        eng_data.set_value(index, "fix_version", "None")
-
-#eng_data['labels'] = eng_data['labels'].apply(lambda s: list(literal_eval(s)))
-#eng_onehot = pd.get_dummies(eng_data['labels'].apply(pd.Series).stack()).sum(level=0)
-#eng_data_clean = pd.concat([eng_data, eng_onehot], axis=1)
-#eng_data_clean = eng_data_clean.fillna(0)
-#eng_data_clean.to_csv('eng_changelog_clean.csv', encoding='utf-8')

@@ -16,6 +16,23 @@ def clean_labels():
     print('clean df written to csv')
     return pm_clean
 
+def clean_eng():
+    eng_data = pd.read_csv('eng_changelog.csv', names=['eng_key', 'eng_id', 'issue_type', 'updated_time', 'updated_status', 'fix_version', 'labels']).reset_index().drop(['index'], axis=1)
+    for index, row in eng_data.iterrows():
+        fix = row["fix_version"]
+        fix_literal = ast.literal_eval(fix)
+        try:
+            fix_name = fix_literal[0]['name']
+            eng_data.set_value(index, "fix_version", fix_name)
+        except:
+            eng_data.set_value(index, "fix_version", "None")
+    eng_data['labels'] = eng_data['labels'].apply(lambda s: list(ast.literal_eval(s)))
+    eng_onehot = pd.get_dummies(eng_data['labels'].apply(pd.Series).stack()).sum(level=0)
+    eng_data_clean = pd.concat([eng_data, eng_onehot], axis=1)
+    eng_data_clean = eng_data_clean.fillna(0)
+    eng_data_clean.to_csv('eng_changelog_clean.csv', encoding='utf-8')
+    print('Eng Data Clean')
+
 def get_pm_issues():
     results = youi_utils.jira_search('project in (PM)')
     file_name = 'pm_jira_' + datetime.now().strftime('%Y-%m-%d') + '.csv'
@@ -40,9 +57,11 @@ def pm_children_changelog(pm_csv):
         pm_labels = []
         for i in issue_list:
             try:
-                related_entry = [i['outwardIssue']['id'], i['outwardIssue']['key']]
-                print(related_entry)
-                related_issues.append(related_entry)
+                print(i['type']['outward'])
+                if (i['type']['outward'] == 'is parent of'):
+                    related_entry = [i['outwardIssue']['id'], i['outwardIssue']['key']]
+                    print(related_entry)
+                    related_issues.append(related_entry)
                 try:
                     print('labels: ' + str(label_list))
                     pm_labels.append(label_list)
