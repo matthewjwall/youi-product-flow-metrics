@@ -1,0 +1,100 @@
+Issue Type,Issue key,Summary,Fix versions,Fix versions,Status,Resolution,Type,Liability/Asset,PM,Planned?,Delivered,Type
+Bug,BS-149,CMake yi_configure_asset_copying does not copy ADDITIONAL_ASSET_PATHS,5.7.0,,Closed,Fixed,,L,No,,y,In Market Issue
+Bug,BS-212,Requires touchscreen logic for Android TV is inverted,5.7.0,,Closed,Fixed,,L,No,,y,In Market Issue
+Story,BS-292,"As a user, I would like to be able to force CMake to regenerate the project",5.7.0,,Closed,Done,,A,No,,y,Engineering Work
+Technical Story,BS-323,youi-cli unit testing as part of PRB,5.7.0,,Closed,Fixed,,A,No,,y,Engineering Work
+Story,BS-324,Integration testing for youi-cli,5.7.0,,Closed,Done,,A,No,,y,Engineering Work
+Story,BS-334,youi-tv clean [platform] command,5.7.0,,Closed,Done,,A,No,,y,Engineering Work
+Bug,BS-371,Remove warning around missing Android module definition,5.7.0,,Closed,Fixed,,L,No,,y,In Market Issue
+Sub-task,BS-378,Use the local youi-cli in BS-377 to test login / logout of artifactory server,5.7.0,,Closed,Fixed,,A,No,,y,Engineering Work
+Bug,BS-382,Can't enable YI_DEV_JS using generate.sh,5.7.0,,Closed,Fixed,SAE,L,No,,y,SAE
+Technical Story,BS-392,youi-tv build should re-run generate when options are different,5.7.0,,Closed,Done,,A,No,,y,Engineering Work
+Bug,BS-398,youi-tv module list --help should show the list options,5.7.0,,Closed,Fixed,,L,No,,y,In Market Issue
+Technical Story,BS-399,Support split release.json file for MSE packages to be installed as part of custom SDK,5.7.0,,Closed,Fixed,,A,Yes,,y,PM Work
+Story,BS-435,Enable webOS react libraries in YIEO package,5.7.0,,Closed,Fixed,,A,Yes,,y,PM Work
+Story,CS-3025,Cloud support for CSS zIndex property to display components,5.7.0,,Closed,Done,,A,Yes,,y,PM Work
+Bug,CS-3055,Resizing the server side app affects client scaling.,5.7.0,,Closed,Fixed,,L,Yes,,y,Issues Fixed during Development
+Spike,CS-3214,"As a developer, I would like to trigger subtree exports though node events so that we don't need an update loop",5.7.0,,Closed,Done,,L,No,,y,In Market Issue
+Bug,CS-3358,"CloudVideoPlayer - Pressing ""back"" on the landing page pops the main scene",5.7.0,,Closed,Done,,L,No,,y,In Market Issue
+Bug,CS-3359,CloudVideoPlayer - Elements are incorrectly displayed due to CSV changes,5.7.0,,Closed,Fixed,,L,Yes,,y,Issues Fixed during Development
+Bug,CS-3377,"CloudTester - ""scrollToIndex on Focus"" has conflicts between several elements in a grid , Does not scroll in some instances",5.7.0,,Closed,Fixed,,L,Yes,,y,Issues Fixed during Development
+Story,CS-3424,Return native error codes on Cloud,5.7.0,,Closed,Done,,A,Yes,,y,PM Work
+Story,CS-3428,Send Timeline Animations To Client On Demand,5.7.0,,Closed,Done,,A,No,,y,Engineering Work
+Bug,CS-3435,[5.4.0] YiReactNativeTestApp - Several issues in ViewRef Focus,5.7.0,,Closed,Done,,L,No,,y,In Market Issue
+Bug,CS-3451,Parameter itemIndex in FireSelectionEventForListItemView method can underflow,5.7.0,,Closed,Fixed,,L,No,,y,In Market Issue
+Bug,CS-3452,Roku - Server disconnected dialog cannot be closed,5.7.0,,Closed,Fixed,,L,No,,y,In Market Issue
+Bug,CS-3462,Network Error dialog is displayed intermittently when returning from screensaver,5.7.0,,Closed,Done,,L,No,,y,In Market Issue
+Bug,CS-3465,CloudTester - Vertical Content Drawer navigation is broken,5.7.0,,Closed,Done,,L,No,,y,In Market Issue
+Bug,CS-3473,Unsupported character in CYITextNode text property will cause a component library failure,5.7.0,,Closed,Fixed,,L,No,,y,In Market Issue
+Bug,CS-3491,CloudTester - Scrolling Text (5.6.0-rc1),5.7.0,,Closed,Fixed,,L,No,,y,In Market Issue
+Story,CS-3497,Remove use of deprecated ListView from cloud,5.7.0,,Closed,Fixed,,A,No,,y,Engineering Work
+Bug,CS-3506,Focus being reset when using SendUpdatedListContents or ReplaceSubtree,5.7.0,,Closed,Fixed,SAE,L,No,,y,SAE
+Bug,CS-3520,Unable to focus on button with zero opacity,5.7.0,,Closed,Done,SAE,L,No,,y,SAE
+Bug,CS-3525,RN Cloud runs main loop rather than blocked before client connection,5.7.0,,Closed,Fixed,,L,No,,y,In Market Issue
+Story,CS-3528,Send ROKU metadata to the session recorder,5.7.0,,Closed,Done,,A,No,,y,Engineering Work
+Bug,CS-3536,RNTesterApp- Focus issues/Crash when in headless,5.7.0,,Closed,Fixed,,L,No,,y,In Market Issue
+Bug,CS-3565,CloudTester - Text is not being updated via property updates (5.7.0-rc1),5.7.0,,Closed,Fixed,,L,Yes,,y,Issues Fixed during Development
+Technical Story,RN-2033,Add Regression and Development modes to YiReactNativeTestApp,5.7.0,,Closed,Done,,L,No,,y,In Market Issue
+Bug,RN-2109,Screen Dimensions are reported incorrectly,5.7.0,,Closed,Fixed,,L,Yes,,y,Issues Fixed during Development
+Story,RN-2129,Add support for InputAccessoryView on tvOS,5.7.0,,Closed,Done,SAO,A,Yes,,y,SAO
+Technical Story,RN-2141,Create RNTesterApp Template Layouts,5.7.0,,Closed,Done,,L,No,,y,In Market Issue
+Technical Story,RN-2146,BackHandlerModule should only listen to events when the JS has at least 1 listener,5.7.0,,Closed,Done,SAE,L,No,,y,SAE
+Story,RN-2149,JS-Side profiling on javascriptcore,5.7.0,,Closed,Done,,A,Yes,,y,PM Work
+Technical Story,RN-2177,Unit Test for Image Test crash fix,5.7.0,,Closed,Done,,A,No,,y,Engineering Work
+Technical Story,RN-2201,Accelerate DestroySubTree,5.7.0,,Closed,Done,,A,No,,y,Engineering Work
+Bug,RN-2224,[Android | iOS] ButtonRef not responding to presses,5.6.1,5.7.0,Closed,Fixed,SAE,L,No,,y,SAE
+Technical Story,RN-2227,Reduce the number of signal connections to a single signal,5.7.0,,Closed,Done,,A,No,,y,Engineering Work
+Bug,RN-2248,TextInputRef: letters are getting on top of each other,5.7.0,,Closed,Fixed,,L,No,,y,In Market Issue
+Bug,RN-2261,Click and OnTouch EventDispatcher Crashes on Events,5.7.0,,Closed,Fixed,,L,No,,y,In Market Issue
+Technical Story,RN-957,Unit Tests: CssViewTemplate,5.7.0,,Closed,Done,,A,No,,y,Engineering Work
+Technical Story,RN-969,Unit Tests: RedScreenOfDeathView,5.7.0,,Closed,Done,,A,No,,y,Engineering Work
+Technical Story,RN-977,Unit Tests: ReactInformationWidget,5.7.0,,Closed,Done,,A,No,,y,Engineering Work
+Story,US-10024,Move LG port to jscore on WebOS4,5.7.0,,Closed,Fixed,,A,Yes,,y,PM Work
+Bug,US-10047,Items do not appear after calling scrollTo() on carousel lists in some cases,5.7.0,,Closed,Fixed,,L,No,,y,In Market Issue
+Bug,US-10071,<Video/> component prop muted can only be set to true after the video begins playing,5.7.0,,Closed,Fixed,,L,No,,y,In Market Issue
+Story,US-10113,Move LG port to jscore on WebOS3,5.7.0,,Closed,Fixed,,A,Yes,,y,PM Work
+Epic,US-10150,Enable support for live stream pause buffer information,5.7.0,,Closed,Done,SAO,A,,,y,SAO
+Technical Story,US-10164,Make CYIPriorityQueue Private,5.7.0,,Closed,Done,,A,No,,y,Engineering Work
+Story,US-10171,"Clean up Math, MathTables",5.7.0,,Closed,Done,,A,No,,y,Engineering Work
+Story,US-10243,Handle seeking within live streaming window on WebOS,5.7.0,,Closed,Done,,A,Yes,,y,PM Work
+Bug,US-10248,BigTextTester crashing on BGFX,5.7.0,,Closed,Fixed,,L,Yes,,y,Issues Fixed during Development
+Epic,US-10275,Enable showing an image on top of the software keyboard,5.7.0,,Closed,Done,SAO NRE,A,Yes,,y,SAO NRE
+Spike,US-10277,Determine approach for removing decoupling duktape from js bindings,5.7.0,,Closed,Done,,,,,y,WHAT
+Bug,US-10297,PlayerTester FairPlay implementation doesn't work after latest network change,5.7.0,,Closed,Fixed,,L,No,,y,In Market Issue
+Story,US-10299,Move Attribute Filters to Automation Layer,5.7.0,,Closed,Done,,A,No,,y,Engineering Work
+Story,US-10308,Move ClearNode to Automation Layer,5.7.0,,Closed,Done,,A,No,,y,Engineering Work
+Story,US-10309,Move CloseApp to Automation Layer,5.7.0,,Closed,Done,,A,No,,y,Engineering Work
+Story,US-10332,Move IsScrolling() to Automation Layer,5.7.0,,Closed,Done,,A,No,,y,Engineering Work
+Story,US-10333,Move IsElementSelected() to Automation Layer,5.7.0,,Closed,Done,,A,No,,y,Engineering Work
+Story,US-10334,Move FindNodeText() to Automation Layer,5.7.0,,Closed,Done,,A,No,,y,Engineering Work
+Epic,US-10337,"(Remainder) As a player developer, I want to access the native player error codes",5.7.0,,Closed,Done,SAO,A,,,y,SAO
+Bug,US-10341,Add missing documentation for Android emulator,5.7.0,,Closed,Done,,L,No,,y,In Market Issue
+Story,US-10347,Enable image for onscreen keyboard on TVOS,5.7.0,,Closed,Done,,A,Yes,,y,PM Work
+Technical Story,US-10355,Add CYIString::FromValue overloads for integral types,5.7.0,,Closed,Fixed,,A,No,,y,Engineering Work
+Spike,US-10358,Determine VoiceOver Support on tvOS,5.7.0,,Closed,Done,,,,,y,WHAT
+Bug,US-10360,Layout sample missing tabs and other carousel items,5.7.0,,Closed,Fixed,,L,Yes,,y,Issues Fixed during Development
+Story,US-10364,Remove YiMFVideoPlayer,5.7.0,,Closed,Done,,A,No,,y,Engineering Work
+Bug,US-10371,Socket connections blocking other HTTP request/processing,5.7.0,,Closed,Fixed,,L,No,,y,In Market Issue
+Bug,US-10378,Talkback enabled - Unable to focus within app [Android Mobile and Tablet],5.7.0,,Closed,Fixed,SAE,L,No,,y,SAE
+Story,US-10382,Add glm::vec2 support to CYIVariant,5.7.0,,Closed,Done,,A,No,,y,Engineering Work
+Bug,US-10387,Android Mobile - VideoPlayer crashes on exit,5.7.0,,Closed,Fixed,,L,No,,y,In Market Issue
+Story,US-10396,CYIListView does not provide index of focused item that is needed when saving or exporting the state of the list.,5.7.0,,Closed,Done,,L,No,,y,In Market Issue
+Technical Story,US-10398,Initial benchmarking of RN on LG using JSCore,5.7.0,,Closed,Done,,A,Yes,,y,PM Work
+Story,US-10404,Compile spdlog on all supported platforms,5.7.0,,Closed,Fixed,,A,No,,y,Engineering Work
+Technical Story,US-10414,Misc performance updates,5.7.0,,Closed,Done,,A,Yes,,y,PM Work
+Bug,US-10415,Bluesky : Directional input stop working after idle mode kicks in,5.7.0,,Closed,Fixed,SAE,L,No,,y,SAE
+Spike,US-10439,Research how to receive network logs in a consumable way,5.7.0,,Closed,Done,,A,No,,y,Engineering Work
+Story,US-10453,Deprecate the EYIConnectionType::AsyncBlock signal connection mode,5.7.0,,Closed,Done,,A,No,,y,Engineering Work
+Bug,US-2691,"setting DirtyVisibility & DirtyOpacity also sets DirtyBoundingBox, but the bounding box does not rely on visibility or opacity information",5.7.0,,Closed,Fixed,,L,Yes,,y,Issues Fixed during Development
+Bug,US-2693,"setting DirtyMesh also sets DirtyWorldTransform, but the world transform does not rely on mesh information",5.7.0,,Closed,Fixed,,L,Yes,,y,Issues Fixed during Development
+Technical Story,US-7967,CYITextSceneNode::SetFontStyle is unused in the engine,5.7.0,,Closed,Fixed,,L,No,,y,In Market Issue
+Story,US-8205,See exported AE Shape Animations,5.7.0,,Closed,Done,,A,No,,y,Engineering Work
+Spike,US-9100,Investigate various logging libraries as potential replacements to the youiengine logger,5.7.0,,Closed,Done,,A,No,,y,Engineering Work
+Bug,US-9467,Timeline animations can 'miss' the last frame,5.7.0,,Closed,Fixed,,A,No,,y,Engineering Work
+Bug,US-9799,Talkback enabled -> unable to focus within app [AndroidTV],5.7.0,,Closed,Fixed,SAE,L,No,,y,SAE
+Story,US-9910,Add bgFX support to iOS and tvOS,5.7.0,,Closed,Fixed,,A,Yes,,y,PM Work
+,US-10514,"Backport: As a player developer, I want to access the native player error codes",,,,,SAO NRE,A,,n,y,SAO NRE
+,US-10513,Backport: websocket-sub-protocols,,,,,SAO NRE,A,,n,y,SAO NRE
+,US-10509,Support inline base64 images in URIs in Core,,,,,SAO,A,,n,y,SAO
+,US-10503,Use highly reduced external icu.dat file on bluesky,,,,,SAO,A,,n,y,SAO
+,BS-427,Switch to ICU dat file for Bluesky platform,,,,,SAO,A,,n,y,SAO
